@@ -22,6 +22,15 @@ func getUrl(url string) ([]byte, error) {
 	return contents, err
 }
 
+func (vendor *Vendor) NotFound() Deal {
+	return Deal{
+		Vendor:   vendor,
+		Title:    "No Results",
+		ImageUrl: "",
+		Url:      vendor.HomeUrl,
+	}
+}
+
 func (vendor *Vendor) Apress() Deal {
 	contents, err := getUrl(vendor.DealUrl)
 	if err == nil {
@@ -45,10 +54,9 @@ func (vendor *Vendor) Apress() Deal {
 			}
 		}
 	}
-	return Deal{
-		Vendor:   vendor,
-		Title:    "No Results",
-		ImageUrl: "",
-		Url:      "",
-	}
+	return vendor.NotFound()
+}
+
+func (vendor *Vendor) Springer() Deal {
+	return vendor.Apress()
 }

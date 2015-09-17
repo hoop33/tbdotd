@@ -18,6 +18,11 @@ var vendors = []models.Vendor{
 		HomeUrl: "http://www.apress.com/",
 		DealUrl: "http://www.apress.com/index.php/dailydeals/index/rss",
 	},
+	{
+		Name:    "Springer",
+		HomeUrl: "http://www.apress.com/",
+		DealUrl: "http://www.apress.com/index.php/dailydealsspringer/index/rss",
+	},
 }
 
 func (c App) Index() revel.Result {
@@ -31,18 +36,14 @@ func (c App) Index() revel.Result {
 				values := method.Call([]reflect.Value{})
 				deal = values[0].Interface().(models.Deal)
 			} else {
-				deal = models.Deal{
-					Vendor:   &vendor,
-					Title:    "Not Found",
-					ImageUrl: "",
-					Url:      vendor.HomeUrl,
-				}
+				deal = vendor.NotFound()
 			}
 			results <- deal
 		}(vendor)
 	}
 
 	// TODO should we use a WaitGroup here instead?
+	// TODO sort!
 	deals := []models.Deal{}
 	for _, _ = range vendors {
 		deals = append(deals, <-results)
