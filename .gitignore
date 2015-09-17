@@ -28,4 +28,4 @@ _testmain.go
 
 # Revel-specific
 app/tmp/*
-app/routes.go
+app/routes/routes.go
