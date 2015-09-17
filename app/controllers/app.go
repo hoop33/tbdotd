@@ -4,7 +4,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"reflect"
-	"strings"
 
 	"github.com/hoop33/tbdotd/app/models"
 	"github.com/revel/revel"
@@ -30,6 +29,11 @@ var vendors = []models.Vendor{
 		HomeUrl: "http://www.informit.com/",
 		DealUrl: "http://www.informit.com/deals/deal_rss.aspx",
 	},
+	{
+		Name:    "InformIT Video",
+		HomeUrl: "http://www.informit.com/",
+		DealUrl: "http://www.informit.com/deals/video/deal_rss.aspx",
+	},
 }
 
 func getUrl(url string) ([]byte, error) {
@@ -54,7 +58,7 @@ func (c App) Index() revel.Result {
 	for _, vendor := range vendors {
 		go func(vendor models.Vendor) {
 			var deal models.Deal
-			method := reflect.ValueOf(&vendor).MethodByName(strings.Replace(vendor.Name, "'", "", -1))
+			method := reflect.ValueOf(&vendor).MethodByName(vendor.GetProcessingMethodName())
 			if method.IsValid() {
 				payload, err := getUrl(vendor.DealUrl)
 				if err == nil {

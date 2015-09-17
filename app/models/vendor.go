@@ -1,11 +1,24 @@
 package models
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+	"strings"
+)
 
 type Vendor struct {
 	Name    string
 	HomeUrl string
 	DealUrl string
+}
+
+var removeChars = []string{"'", " "}
+
+func (vendor *Vendor) GetProcessingMethodName() string {
+	name := vendor.Name
+	for _, r := range removeChars {
+		name = strings.Replace(name, r, "", -1)
+	}
+	return name
 }
 
 func (vendor *Vendor) NotFound() Deal {
@@ -65,4 +78,8 @@ func (vendor *Vendor) InformIT(payload []byte) Deal {
 		}
 	}
 	return vendor.NotFound()
+}
+
+func (vendor *Vendor) InformITVideo(payload []byte) Deal {
+	return vendor.InformIT(payload)
 }
