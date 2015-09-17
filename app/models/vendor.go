@@ -43,3 +43,26 @@ func (vendor *Vendor) Apress(payload []byte) Deal {
 func (vendor *Vendor) Springer(payload []byte) Deal {
 	return vendor.Apress(payload)
 }
+
+func (vendor *Vendor) InformIT(payload []byte) Deal {
+	rss := struct {
+		Channel struct {
+			Item struct {
+				Title string `xml:"title"`
+				Link  string `xml:"link"`
+				Guid  string `xml:guid"`
+			} `xml:"item"`
+		} `xml:"channel"`
+	}{}
+	xml.Unmarshal(payload, &rss)
+	if rss.Channel.Item.Title != "" {
+		item := rss.Channel.Item
+		return Deal{
+			Vendor:   vendor,
+			Title:    item.Title,
+			ImageUrl: item.Guid,
+			Url:      item.Link,
+		}
+	}
+	return vendor.NotFound()
+}

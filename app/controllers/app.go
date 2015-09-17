@@ -25,14 +25,25 @@ var vendors = []models.Vendor{
 		HomeUrl: "http://www.apress.com/",
 		DealUrl: "http://www.apress.com/index.php/dailydealsspringer/index/rss",
 	},
+	{
+		Name:    "InformIT",
+		HomeUrl: "http://www.informit.com/",
+		DealUrl: "http://www.informit.com/deals/deal_rss.aspx",
+	},
 }
 
 func getUrl(url string) ([]byte, error) {
+	revel.INFO.Printf("Retrieving %s", url)
 	var contents []byte
 	response, err := http.Get(url)
 	if err == nil {
 		contents, err = ioutil.ReadAll(response.Body)
 		defer response.Body.Close()
+	}
+	if err == nil {
+		revel.INFO.Printf("%s returned %s", url, contents)
+	} else {
+		revel.ERROR.Printf("%s got error '%s'", url, err.Error())
 	}
 	return contents, err
 }
