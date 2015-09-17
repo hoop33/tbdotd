@@ -34,6 +34,16 @@ var vendors = []models.Vendor{
 		HomeUrl: "http://www.informit.com/",
 		DealUrl: "http://www.informit.com/deals/video/deal_rss.aspx",
 	},
+  {
+    Name: "Peachpit",
+    HomeUrl: "http://www.peachpit.com/",
+    DealUrl: "http://www.peachpit.com/deals/deal_rss.aspx",
+  },
+  {
+    Name: "Peachpit",
+    HomeUrl: "http://www.peachpit.com/",
+    DealUrl: "http://www.peachpit.com/deals/video/deal_rss.aspx",
+  },
 }
 
 func getUrl(url string) ([]byte, error) {

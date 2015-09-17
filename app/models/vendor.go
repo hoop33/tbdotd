@@ -83,3 +83,11 @@ func (vendor *Vendor) InformIT(payload []byte) Deal {
 func (vendor *Vendor) InformITVideo(payload []byte) Deal {
 	return vendor.InformIT(payload)
 }
+
+func (vendor *Vendor) Peachpit(payload []byte) Deal {
+	return vendor.InformIT(payload)
+}
+
+func (vendor *Vendor) PeachpitVideo(payload []byte) Deal {
+	return vendor.InformIT(payload)
+}
