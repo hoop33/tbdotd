@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"io/ioutil"
+	"net/http"
 	"reflect"
 	"strings"
 
@@ -25,6 +27,16 @@ var vendors = []models.Vendor{
 	},
 }
 
+func getUrl(url string) ([]byte, error) {
+	var contents []byte
+	response, err := http.Get(url)
+	if err == nil {
+		contents, err = ioutil.ReadAll(response.Body)
+		defer response.Body.Close()
+	}
+	return contents, err
+}
+
 func (c App) Index() revel.Result {
 	results := make(chan models.Deal)
 
@@ -33,8 +45,11 @@ func (c App) Index() revel.Result {
 			var deal models.Deal
 			method := reflect.ValueOf(&vendor).MethodByName(strings.Replace(vendor.Name, "'", "", -1))
 			if method.IsValid() {
-				values := method.Call([]reflect.Value{})
-				deal = values[0].Interface().(models.Deal)
+				payload, err := getUrl(vendor.DealUrl)
+				if err == nil {
+					values := method.Call([]reflect.Value{reflect.ValueOf(payload)})
+					deal = values[0].Interface().(models.Deal)
+				}
 			} else {
 				deal = vendor.NotFound()
 			}
