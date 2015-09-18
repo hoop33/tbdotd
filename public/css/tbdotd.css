@@ -4,5 +4,20 @@
 
 .deal-container {
   background-color: gray;
+  border-radius: 5px;
   border: 1px solid black;
+}
+
+.deal-title {
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.deal-image {
+  padding: 10px;
+  text-align: center;
+}
+
+.vendor-name {
+  text-align: center;
 }
