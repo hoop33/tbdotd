@@ -1,6 +1,6 @@
 body {
-  background-color: #daad86;
-  color: #312c32;
+  background-color: #e8eaf6;
+  color: #3f51b5;
 }
 
 .deal {
@@ -8,8 +8,11 @@ body {
 }
 
 .deal-container {
-  background-color: #feffff;
-  border: 1px solid #312c32;
+  background-color: #eee;
+  border: 1px solid #3f51b5;
+  -webkit-box-shadow: 0px 5px 10px 0px rgba(26,35,126,1);
+  -moz-box-shadow: 0px 5px 10px 0px rgba(26,35,126,1);
+  box-shadow: 0px 5px 10px 0px rgba(26,35,126,1);
 }
 
 .deal-title {
@@ -23,14 +26,21 @@ body {
 }
 
 .deal-image img {
-  -webkit-box-shadow: 0px 5px 5px 0px rgba(49,44,50,1);
-  -moz-box-shadow: 0px 5px 5px 0px rgba(49,44,50,1);
-box-shadow: 0px 5px 5px 0px rgba(49,44,50,1);}
+  -webkit-box-shadow: 0px 5px 5px 0px rgba(26,35,126,1);
+  -moz-box-shadow: 0px 5px 5px 0px rgba(26,35,126,1);
+  box-shadow: 0px 5px 5px 0px rgba(26,35,126,1);
+}
 
 .vendor-name {
   text-align: center;
-  background-color: #98dafc;
-  color: #feffff;
+  background-color: #3f51b5;
+  color: #e8eaf6;
   font-size: 1.5em;
+  padding: 10px 0;
 }
+
+.vendor-name a {
+  color: #ffc107;
+}
+
 
