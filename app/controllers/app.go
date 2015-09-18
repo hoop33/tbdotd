@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"reflect"
+	"sort"
 
 	"github.com/hoop33/tbdotd/app/models"
 	"github.com/revel/revel"
@@ -103,11 +104,11 @@ func (c App) Index() revel.Result {
 	}
 
 	// TODO should we use a WaitGroup here instead?
-	// TODO sort!
 	deals := []models.Deal{}
 	for _, _ = range vendors {
 		deals = append(deals, <-results)
 	}
 
+	sort.Sort(models.ByVendorName(deals))
 	return c.Render(deals)
 }
