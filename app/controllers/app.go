@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"reflect"
 	"sort"
+	"time"
 
 	"github.com/hoop33/tbdotd/app/models"
 	"github.com/revel/revel"
@@ -70,7 +71,12 @@ var vendors = []models.Vendor{
 func getUrl(url string) ([]byte, error) {
 	revel.INFO.Printf("Retrieving %s", url)
 	var contents []byte
-	response, err := http.Get(url)
+
+	// TODO put timeout in configuration file
+	client := http.Client{
+		Timeout: time.Duration(10 * time.Second),
+	}
+	response, err := client.Get(url)
 	if err == nil {
 		contents, err = ioutil.ReadAll(response.Body)
 		defer response.Body.Close()
