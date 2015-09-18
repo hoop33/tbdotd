@@ -91,3 +91,32 @@ func (vendor *Vendor) Peachpit(payload []byte) Deal {
 func (vendor *Vendor) PeachpitVideo(payload []byte) Deal {
 	return vendor.InformIT(payload)
 }
+
+func (vendor *Vendor) OReilly(payload []byte) Deal {
+	rss := struct {
+		Entries []struct {
+			Title   string `xml:"title"`
+			Link    string `xml:"id"`
+			Content string `xml:"content"`
+		} `xml:"entry"`
+	}{}
+	xml.Unmarshal(payload, &rss)
+	if len(rss.Entries) > 0 {
+		item := rss.Entries[0]
+		return Deal{
+			Vendor:   vendor,
+			Title:    item.Title,
+			ImageUrl: "",
+			Url:      item.Link,
+		}
+	}
+	return vendor.NotFound()
+}
+
+func (vendor *Vendor) OReillyBusiness(payload []byte) Deal {
+	return vendor.OReilly(payload)
+}
+
+func (vendor *Vendor) OReillyVideo(payload []byte) Deal {
+	return vendor.OReilly(payload)
+}

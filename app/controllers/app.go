@@ -34,15 +34,30 @@ var vendors = []models.Vendor{
 		HomeUrl: "http://www.informit.com/",
 		DealUrl: "http://www.informit.com/deals/video/deal_rss.aspx",
 	},
+	{
+		Name:    "Peachpit",
+		HomeUrl: "http://www.peachpit.com/",
+		DealUrl: "http://www.peachpit.com/deals/deal_rss.aspx",
+	},
+	{
+		Name:    "Peachpit",
+		HomeUrl: "http://www.peachpit.com/",
+		DealUrl: "http://www.peachpit.com/deals/video/deal_rss.aspx",
+	},
+	{
+		Name:    "O'Reilly",
+		HomeUrl: "http://www.oreilly.com/",
+		DealUrl: "http://feeds.feedburner.com/oreilly/ebookdealoftheday",
+	},
   {
-    Name: "Peachpit",
-    HomeUrl: "http://www.peachpit.com/",
-    DealUrl: "http://www.peachpit.com/deals/deal_rss.aspx",
+    Name:    "O'Reilly Business",
+    HomeUrl: "http://www.oreilly.com/",
+    DealUrl: "http://feeds.feedburner.com/oreilly/mspebookdeal",
   },
   {
-    Name: "Peachpit",
-    HomeUrl: "http://www.peachpit.com/",
-    DealUrl: "http://www.peachpit.com/deals/video/deal_rss.aspx",
+    Name:    "O'Reilly Video",
+    HomeUrl: "http://www.oreilly.com/",
+    DealUrl: "http://feeds.feedburner.com/oreilly/videodealoftheweek",
   },
 }
 
