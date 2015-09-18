@@ -49,16 +49,21 @@ var vendors = []models.Vendor{
 		HomeUrl: "http://www.oreilly.com/",
 		DealUrl: "http://feeds.feedburner.com/oreilly/ebookdealoftheday",
 	},
-  {
-    Name:    "O'Reilly Business",
-    HomeUrl: "http://www.oreilly.com/",
-    DealUrl: "http://feeds.feedburner.com/oreilly/mspebookdeal",
-  },
-  {
-    Name:    "O'Reilly Video",
-    HomeUrl: "http://www.oreilly.com/",
-    DealUrl: "http://feeds.feedburner.com/oreilly/videodealoftheweek",
-  },
+	{
+		Name:    "O'Reilly Business",
+		HomeUrl: "http://www.oreilly.com/",
+		DealUrl: "http://feeds.feedburner.com/oreilly/mspebookdeal",
+	},
+	{
+		Name:    "O'Reilly Video",
+		HomeUrl: "http://www.oreilly.com/",
+		DealUrl: "http://feeds.feedburner.com/oreilly/videodealoftheweek",
+	},
+	{
+		Name:    "Manning",
+		HomeUrl: "https://manning.com/",
+		DealUrl: "https://manning.com/dotd",
+	},
 }
 
 func getUrl(url string) ([]byte, error) {

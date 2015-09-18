@@ -2,6 +2,8 @@ package models
 
 import (
 	"encoding/xml"
+	"fmt"
+	"regexp"
 	"strings"
 )
 
@@ -119,4 +121,18 @@ func (vendor *Vendor) OReillyBusiness(payload []byte) Deal {
 
 func (vendor *Vendor) OReillyVideo(payload []byte) Deal {
 	return vendor.OReilly(payload)
+}
+
+func (vendor *Vendor) Manning(payload []byte) Deal {
+	re := regexp.MustCompile("\\<div class=\"title\">Deal of the Day\\</div\\>(?s:.+?)\\<a href=\"(.+?)\"(?s:.+?)\\<div class=\"product-placeholder-title\"\\>\\s*(.+?)\\s*\\</div\\>(?s:.+?)\\<div style=\"background-image: url\\('(.+?)'\\)")
+	matches := re.FindSubmatch(payload)
+	if matches != nil {
+		return Deal{
+			Vendor:   vendor,
+			Title:    string(matches[2]),
+			ImageUrl: string(matches[3]),
+			Url:      fmt.Sprintf("%s%s", vendor.HomeUrl, strings.TrimPrefix(string(matches[1]), "/")),
+		}
+	}
+	return vendor.NotFound()
 }
