@@ -1,5 +1,5 @@
 body {
-  background-color: #feffff;
+  background-color: #daad86;
   color: #312c32;
 }
 
@@ -8,17 +8,13 @@ body {
 }
 
 .deal-container {
-  background-color: #daad86;
-  border-radius: 5px;
+  background-color: #feffff;
   border: 1px solid #312c32;
-  position: relative;
 }
 
 .deal-title {
   text-align: center;
-  font-size: 1.5em;
-  background-color: #98dafc;
-  color: #feffff;
+  font-size: 1.0em;
 }
 
 .deal-image {
@@ -29,10 +25,7 @@ body {
 .vendor-name {
   text-align: center;
   background-color: #98dafc;
-  font-size: 1.5em;
   color: #feffff;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
+  font-size: 1.5em;
 }
 
