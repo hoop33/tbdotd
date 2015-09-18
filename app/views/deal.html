@@ -1,19 +1,17 @@
-<div class="panel panel-default col-sm-12 col-md-6 col-lg-3">
-  <div class="panel-heading">
-    <div class="panel-title">
+<div class="deal col-sm-12 col-md-6 col-lg-3">
+  <div class="deal-container">
+    <div class="deal-image">
+      <a href="{{.Url}}">
+        <img src="{{.ImageUrl}}" alt="{{.Title}}" height="150">
+      </a>
+    </div>
+    <div class="deal-title">
       {{.Title}}
     </div>
-    <div class="panel-body">
-      <div class="book-cover">
-        <a href="{{.Url}}">
-          <img src="{{.ImageUrl}}" alt="{{.Title}}" height="150">
-        </a>
-      </div>
-      <div class="vendor-name">
-        <a href="{{.Vendor.HomeUrl}}">
-          {{.Vendor.Name}}
-        </a>
-      </div>
+    <div class="vendor-name">
+      <a href="{{.Vendor.HomeUrl}}">
+        {{.Vendor.Name}}
+      </a>
     </div>
   </div>
 </div>

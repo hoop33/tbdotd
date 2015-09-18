@@ -1,3 +1,3 @@
 $(document).ready(function() {
-    $('.equal-height-panels .panel').matchHeight();
+    $('.equal-height-deals .deal-container').matchHeight();
 });
