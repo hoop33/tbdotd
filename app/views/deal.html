@@ -4,9 +4,16 @@
       {{.Title}}
     </div>
     <div class="panel-body">
-      <a href="{{.Url}}">
-        <img src="{{.ImageUrl}}" alt="{{.Title}}">
-      </a>
+      <div class="book-cover">
+        <a href="{{.Url}}">
+          <img src="{{.ImageUrl}}" alt="{{.Title}}" height="150">
+        </a>
+      </div>
+      <div class="vendor-name">
+        <a href="{{.Vendor.HomeUrl}}">
+          {{.Vendor.Name}}
+        </a>
+      </div>
     </div>
   </div>
 </div>
