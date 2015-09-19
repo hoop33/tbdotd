@@ -105,10 +105,18 @@ func (vendor *Vendor) OReilly(payload []byte) Deal {
 	xml.Unmarshal(payload, &rss)
 	if len(rss.Entries) > 0 {
 		item := rss.Entries[0]
+
+		imageUrl := ""
+		re := regexp.MustCompile("img src=[\"'](.+?)[\"']")
+		matches := re.FindStringSubmatch(item.Content)
+		if matches != nil {
+			imageUrl = matches[1]
+		}
+
 		return Deal{
 			Vendor:   vendor,
 			Title:    item.Title,
-			ImageUrl: "",
+			ImageUrl: imageUrl,
 			Url:      item.Link,
 		}
 	}
