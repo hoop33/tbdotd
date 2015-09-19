@@ -20,6 +20,7 @@ body {
 .deal-title {
   text-align: center;
   font-size: 1.0em;
+  padding: 10px;
 }
 
 .deal-image {
