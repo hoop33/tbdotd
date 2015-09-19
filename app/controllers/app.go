@@ -42,7 +42,7 @@ var vendors = []models.Vendor{
 		DealUrl: "http://www.peachpit.com/deals/deal_rss.aspx",
 	},
 	{
-		Name:    "Peachpit",
+		Name:    "Peachpit Video",
 		HomeUrl: "http://www.peachpit.com/",
 		DealUrl: "http://www.peachpit.com/deals/video/deal_rss.aspx",
 	},
