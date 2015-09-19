@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      {{template "flash.html" .}}
+    </div>
+  </div>
+
+  <div class="row equal-height-deals">
+    {{range .deals}}
+    {{template "deal.html" .}}
+    {{end}}
+  </div>
+</div>
+

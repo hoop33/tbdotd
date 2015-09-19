@@ -1,27 +1,14 @@
-{{set . "title" "Tech Books Deals of the Day"}}
-{{template "header.html" .}}
+<!DOCTYPE html>
 
-<header>
-  <div class="container">
-    <div class="row">
-      <div class="page-header">
-        <h1>Tech Books Deals of the Day</h1>
-    </div>
-  </div>
-</header>
+<html>
+  {{set . "title" "Tech Books Deals of the Day"}}
+  {{template "head.html" .}}
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      {{template "flash.html" .}}
-    </div>
-  </div>
+  <body>
+    {{template "header.html" .}}
 
-  <div class="row equal-height-deals">
-  {{range .deals}}
-    {{template "deal.html" .}}
-  {{end}}
-  </div>
-</div>
+    {{template "main.html" .}}
 
-{{template "footer.html" .}}
+    {{template "footer.html" .}}
+  </body>
+</html>
