@@ -82,7 +82,8 @@ func getUrl(url string) ([]byte, error) {
 		defer response.Body.Close()
 	}
 	if err == nil {
-		revel.INFO.Printf("%s returned %s", url, contents)
+		revel.INFO.Printf("Retrieved %s", url)
+		revel.TRACE.Printf("%s returned %s", url, contents)
 	} else {
 		revel.ERROR.Printf("%s got error '%s'", url, err.Error())
 	}
