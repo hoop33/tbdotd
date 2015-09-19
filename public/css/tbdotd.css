@@ -40,7 +40,7 @@ body {
 
 .navbar-default {
   background-color: #90CAF9;
-  border-color: #1a237e;
+  border-color: #1A237E;
   color: #0D47A1;
 }
 
@@ -66,6 +66,7 @@ body {
   font-size: 1.5em;
   font-weight: 700;
   border-radius: 10px 10px 0 0;
+  border-bottom: 1px solid #1A237E;
   padding: 10px 0;
 }
 
