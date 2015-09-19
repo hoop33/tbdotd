@@ -65,7 +65,7 @@ func (vendor *Vendor) InformIT(payload []byte) Deal {
 			Item struct {
 				Title string `xml:"title"`
 				Link  string `xml:"link"`
-				Guid  string `xml:guid"`
+				Isbn  string `xml:"guid"`
 			} `xml:"item"`
 		} `xml:"channel"`
 	}{}
@@ -75,7 +75,7 @@ func (vendor *Vendor) InformIT(payload []byte) Deal {
 		return Deal{
 			Vendor:   vendor,
 			Title:    item.Title,
-			ImageUrl: item.Guid,
+			ImageUrl: fmt.Sprintf("%sShowCover.aspx?isbn=%s&type=f", vendor.HomeUrl, item.Isbn),
 			Url:      item.Link,
 		}
 	}
