@@ -144,3 +144,31 @@ func (vendor *Vendor) Manning(payload []byte) Deal {
 	}
 	return vendor.NotFound()
 }
+
+func (vendor *Vendor) PacktPublishing(payload []byte) Deal {
+	re := regexp.MustCompile("\\<div class=\"dotd-main-book-image(?s:.+?)\\<img src=\"(.+?)\"(?s:.+?)\\<div class=\"dotd-main-book-title\"\\>(?s:.+?)\\<h2\\>(.+?)\\</h2\\>")
+	matches := re.FindSubmatch(payload)
+	if matches != nil {
+		return Deal{
+			Vendor:   vendor,
+			Title:    string(matches[2]),
+			ImageUrl: fmt.Sprintf("http:%s", matches[1]),
+			Url:      vendor.DealUrl,
+		}
+	}
+	return vendor.NotFound()
+}
+
+func (vendor *Vendor) PacktPublishingVideo(payload []byte) Deal {
+	re := regexp.MustCompile("\\<div class=\"dotd-main-book-image(?s:.+?)\\<img src=\"(.+?)\"(?s:.+?)\\<div class=\"dotw-heading\"\\>(?s:\\s+?)(.+?)(?s:\\s+?)\\</div\\>")
+	matches := re.FindSubmatch(payload)
+	if matches != nil {
+		return Deal{
+			Vendor:   vendor,
+			Title:    string(matches[2]),
+			ImageUrl: fmt.Sprintf("http:%s", matches[1]),
+			Url:      vendor.DealUrl,
+		}
+	}
+	return vendor.NotFound()
+}

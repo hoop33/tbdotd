@@ -66,6 +66,16 @@ var vendors = []models.Vendor{
 		HomeUrl: "https://manning.com/",
 		DealUrl: "https://manning.com/dotd",
 	},
+	{
+		Name:    "Packt Publishing",
+		HomeUrl: "https://www.packtpub.com/",
+		DealUrl: "https://www.packtpub.com/books/deal-of-the-day",
+	},
+	{
+		Name:    "Packt Publishing Video",
+		HomeUrl: "https://www.packtpub.com/",
+		DealUrl: "https://www.packtpub.com/videos/deal-of-the-week",
+	},
 }
 
 func getUrl(url string) ([]byte, error) {
