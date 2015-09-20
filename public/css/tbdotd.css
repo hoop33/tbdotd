@@ -6,6 +6,10 @@ body {
   padding-bottom: 50px;
 }
 
+i {
+  font-size: 2.0em;
+}
+
 .deal {
   padding: 10px;
 }
