@@ -19,12 +19,12 @@ var vendors = []models.Vendor{
 	{
 		Name:    "Apress",
 		HomeUrl: "http://www.apress.com/",
-		DealUrl: "http://www.apress.com/index.php/dailydeals/index/rss",
+		DealUrl: "http://www.apress.com/",
 	},
 	{
 		Name:    "Springer",
 		HomeUrl: "http://www.apress.com/",
-		DealUrl: "http://www.apress.com/index.php/dailydealsspringer/index/rss",
+		DealUrl: "http://www.apress.com/",
 	},
 	{
 		Name:    "InformIT",

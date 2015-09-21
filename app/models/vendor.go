@@ -33,30 +33,31 @@ func (vendor *Vendor) NotFound() Deal {
 }
 
 func (vendor *Vendor) Apress(payload []byte) Deal {
-	rss := struct {
-		Channel struct {
-			Items []struct {
-				Title string `xml:"title"`
-				Link  string `xml:"link"`
-				Sku   string `xml:"sku"`
-			} `xml:"item"`
-		} `xml:"channel"`
-	}{}
-	xml.Unmarshal(payload, &rss)
-	if len(rss.Channel.Items) > 0 {
-		item := rss.Channel.Items[0]
+	re := regexp.MustCompile("\\<h2 class=\"icon\"\\>Deal of the Day\\</h2\\>(?s:.+?)\\<img .+?src=\"(.+?)\"(?s:.+?)\\<a href=\"(.+?)\"\\>(.+?)\\</a\\>")
+	matches := re.FindSubmatch(payload)
+	if matches != nil {
 		return Deal{
 			Vendor:   vendor,
-			Title:    item.Title,
-			ImageUrl: item.Sku,
-			Url:      item.Link,
+			Title:    string(matches[3]),
+			ImageUrl: string(matches[1]),
+			Url:      string(matches[2]),
 		}
 	}
 	return vendor.NotFound()
 }
 
 func (vendor *Vendor) Springer(payload []byte) Deal {
-	return vendor.Apress(payload)
+	re := regexp.MustCompile("\\<h2 class=\"icon\"\\>Springer Daily Deal\\</h2\\>(?s:.+?)\\<img .+?src=\"(.+?)\"(?s:.+?)\\<a href=\"(.+?)\"\\>(.+?)\\</a\\>")
+	matches := re.FindSubmatch(payload)
+	if matches != nil {
+		return Deal{
+			Vendor:   vendor,
+			Title:    string(matches[3]),
+			ImageUrl: string(matches[1]),
+			Url:      string(matches[2]),
+		}
+	}
+	return vendor.NotFound()
 }
 
 func (vendor *Vendor) InformIT(payload []byte) Deal {
