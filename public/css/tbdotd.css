@@ -69,6 +69,11 @@ i {
   background-color: #0D47A1;
 }
 
+.navbar-text {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .vendor-name {
   text-align: center;
   background-color: #90CAF9;
