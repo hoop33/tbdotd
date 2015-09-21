@@ -8,11 +8,25 @@ It's written in [Go](http://www.golang.org/) using the [Revel Framework](https:/
 
 ## To Run
 
-* TBD
+To run:
+
+* Clone the repo into your go path
+* Install Revel
+* Install the Revel command
+* Run the app
+
+Here are the commands:
+
+```
+$ git clone git@github.com:hoop33 $GOPATH/src/github.com/hoop33/tbdotd
+$ go get github.com/revel/revel
+$ go get github.com/revel/cmd/revel
+$ revel run github.com/hoop33/tbdotd
+```
 
 ## Contributing
 
-* TBD
+We love contributions. Fork the project, make the changes, push to your fork, and open pull requests.
 
 ## License
 
