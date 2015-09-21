@@ -18,7 +18,7 @@ To run:
 Here are the commands:
 
 ```
-$ git clone git@github.com:hoop33 $GOPATH/src/github.com/hoop33/tbdotd
+$ go get github.com/hoop33/tbdotd
 $ go get github.com/revel/revel
 $ go get github.com/revel/cmd/revel
 $ revel run github.com/hoop33/tbdotd
