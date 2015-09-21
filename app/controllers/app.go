@@ -108,12 +108,14 @@ func (c App) Index() revel.Result {
 			var deal models.Deal
 			method := reflect.ValueOf(&vendor).MethodByName(vendor.GetProcessingMethodName())
 			if method.IsValid() {
-				payload, err := getUrl(vendor.DealUrl)
-				if err == nil {
+				if payload, err := getUrl(vendor.DealUrl); err == nil {
 					values := method.Call([]reflect.Value{reflect.ValueOf(payload)})
 					deal = values[0].Interface().(models.Deal)
 				}
-			} else {
+			}
+			// TODO Surely there's a better way to do this
+			// We have two if statements, so two elses
+			if deal.Title == "" {
 				deal = vendor.NotFound()
 			}
 			results <- deal

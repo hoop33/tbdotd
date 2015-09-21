@@ -27,7 +27,7 @@ func (vendor *Vendor) NotFound() Deal {
 	return Deal{
 		Vendor:   vendor,
 		Title:    "No Results",
-		ImageUrl: "",
+		ImageUrl: "/public/img/notfound.png",
 		Url:      vendor.HomeUrl,
 	}
 }
