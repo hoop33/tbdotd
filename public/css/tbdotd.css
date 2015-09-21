@@ -56,6 +56,10 @@ i {
   font-weight: 700;
 }
 
+.navbar-default .navbar-text {
+  color: #0D47A1;
+}
+
 .navbar-default .navbar-nav > li > a {
   color: #0D47A1;
 }
