@@ -30,3 +30,4 @@ _testmain.go
 app/tmp/*
 app/routes/routes.go
 *.log
+test-results
