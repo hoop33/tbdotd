@@ -15,69 +15,6 @@ type App struct {
 	*revel.Controller
 }
 
-var vendors = []models.Vendor{
-	{
-		Name:    "Apress",
-		HomeUrl: "http://www.apress.com/",
-		DealUrl: "http://www.apress.com/",
-	},
-	{
-		Name:    "Springer",
-		HomeUrl: "http://www.apress.com/",
-		DealUrl: "http://www.apress.com/",
-	},
-	{
-		Name:    "InformIT",
-		HomeUrl: "http://www.informit.com/",
-		DealUrl: "http://www.informit.com/deals/deal_rss.aspx",
-	},
-	{
-		Name:    "InformIT Video",
-		HomeUrl: "http://www.informit.com/",
-		DealUrl: "http://www.informit.com/deals/video/deal_rss.aspx",
-	},
-	{
-		Name:    "Peachpit",
-		HomeUrl: "http://www.peachpit.com/",
-		DealUrl: "http://www.peachpit.com/deals/deal_rss.aspx",
-	},
-	{
-		Name:    "Peachpit Video",
-		HomeUrl: "http://www.peachpit.com/",
-		DealUrl: "http://www.peachpit.com/deals/video/deal_rss.aspx",
-	},
-	{
-		Name:    "O'Reilly",
-		HomeUrl: "http://www.oreilly.com/",
-		DealUrl: "http://feeds.feedburner.com/oreilly/ebookdealoftheday",
-	},
-	{
-		Name:    "O'Reilly Business",
-		HomeUrl: "http://www.oreilly.com/",
-		DealUrl: "http://feeds.feedburner.com/oreilly/mspebookdeal",
-	},
-	{
-		Name:    "O'Reilly Video",
-		HomeUrl: "http://www.oreilly.com/",
-		DealUrl: "http://feeds.feedburner.com/oreilly/videodealoftheweek",
-	},
-	{
-		Name:    "Manning",
-		HomeUrl: "https://manning.com/",
-		DealUrl: "https://manning.com/dotd",
-	},
-	{
-		Name:    "Packt Publishing",
-		HomeUrl: "https://www.packtpub.com/",
-		DealUrl: "https://www.packtpub.com/books/deal-of-the-day",
-	},
-	{
-		Name:    "Packt Publishing Video",
-		HomeUrl: "https://www.packtpub.com/",
-		DealUrl: "https://www.packtpub.com/videos/deal-of-the-week",
-	},
-}
-
 func getUrl(url string) ([]byte, error) {
 	revel.INFO.Printf("Retrieving %s", url)
 	var contents []byte
@@ -103,7 +40,7 @@ func getUrl(url string) ([]byte, error) {
 func (c App) Index() revel.Result {
 	results := make(chan models.Deal)
 
-	for _, vendor := range vendors {
+	for _, vendor := range models.Vendors {
 		go func(vendor models.Vendor) {
 			var deal models.Deal
 			method := reflect.ValueOf(&vendor).MethodByName(vendor.GetProcessingMethodName())
@@ -124,7 +61,7 @@ func (c App) Index() revel.Result {
 
 	// TODO should we use a WaitGroup here instead?
 	deals := []models.Deal{}
-	for _, _ = range vendors {
+	for _, _ = range models.Vendors {
 		deals = append(deals, <-results)
 	}
 
