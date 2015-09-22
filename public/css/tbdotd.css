@@ -69,6 +69,19 @@ i {
   background-color: #0D47A1;
 }
 
+.navbar-default .navbar-toggle {
+  border-color: #1A237E;
+}
+
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #90CAF9;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #1A237E;
+}
+
 .navbar-text {
   margin-left: 0;
   margin-right: 0;
