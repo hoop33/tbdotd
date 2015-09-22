@@ -20,8 +20,10 @@ func getUrl(url string) ([]byte, error) {
 	var contents []byte
 
 	// TODO put timeout in configuration file
+	timeout := revel.Config.IntDefault("vendor.url.timeout", 10)
+	revel.INFO.Printf("Vendor URL timeout set to %ds", timeout)
 	client := http.Client{
-		Timeout: time.Duration(10 * time.Second),
+		Timeout: time.Duration(time.Duration(timeout) * time.Second),
 	}
 	response, err := client.Get(url)
 	if err == nil {
