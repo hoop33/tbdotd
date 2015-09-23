@@ -174,6 +174,15 @@ func (vendor *Vendor) PacktPublishingVideo(payload []byte) Deal {
 	return vendor.NotFound()
 }
 
+func VendorWithName(name string) Vendor {
+	for _, vendor := range Vendors {
+		if vendor.Name == name {
+			return vendor
+		}
+	}
+	return Vendor{}
+}
+
 var Vendors = []Vendor{
 	{
 		Name:    "Apress",
