@@ -15,15 +15,12 @@ type App struct {
 	*revel.Controller
 }
 
-func getUrl(url string) ([]byte, error) {
+func getUrl(url string, timeout time.Duration) ([]byte, error) {
 	revel.INFO.Printf("Retrieving %s", url)
 	var contents []byte
 
-	// TODO put timeout in configuration file
-	timeout := revel.Config.IntDefault("vendor.url.timeout", 10)
-	revel.INFO.Printf("Vendor URL timeout set to %ds", timeout)
 	client := http.Client{
-		Timeout: time.Duration(time.Duration(timeout) * time.Second),
+		Timeout: timeout,
 	}
 	response, err := client.Get(url)
 	if err == nil {
@@ -32,9 +29,9 @@ func getUrl(url string) ([]byte, error) {
 	}
 	if err == nil {
 		revel.INFO.Printf("Retrieved %s", url)
-		revel.TRACE.Printf("%s returned %s", url, contents)
+		revel.TRACE.Printf("%s response: %s", url, contents)
 	} else {
-		revel.ERROR.Printf("%s got error '%s'", url, err.Error())
+		revel.ERROR.Printf("%s error: %s", url, err.Error())
 	}
 	return contents, err
 }
@@ -42,12 +39,17 @@ func getUrl(url string) ([]byte, error) {
 func (c App) Index() revel.Result {
 	results := make(chan models.Deal)
 
+	timeout := revel.Config.IntDefault("url.timeout", 5)
+	revel.INFO.Printf("URL timeout set to %ds", timeout)
+
+	urlTimeout := time.Duration(timeout) * time.Second
+
 	for _, vendor := range models.Vendors {
 		go func(vendor models.Vendor) {
 			var deal models.Deal
 			method := reflect.ValueOf(&vendor).MethodByName(vendor.GetProcessingMethodName())
 			if method.IsValid() {
-				if payload, err := getUrl(vendor.DealUrl); err == nil {
+				if payload, err := getUrl(vendor.DealUrl, urlTimeout); err == nil {
 					values := method.Call([]reflect.Value{reflect.ValueOf(payload)})
 					deal = values[0].Interface().(models.Deal)
 				}
