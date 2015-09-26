@@ -13,6 +13,8 @@ type Vendor struct {
 	DealUrl string
 }
 
+var Vendors []Vendor
+
 var removeChars = []string{"'", " "}
 
 func (vendor *Vendor) GetProcessingMethodName() string {
@@ -181,67 +183,4 @@ func VendorWithName(name string) Vendor {
 		}
 	}
 	return Vendor{}
-}
-
-var Vendors = []Vendor{
-	{
-		Name:    "Apress",
-		HomeUrl: "http://www.apress.com/",
-		DealUrl: "http://www.apress.com/",
-	},
-	{
-		Name:    "Springer",
-		HomeUrl: "http://www.apress.com/",
-		DealUrl: "http://www.apress.com/",
-	},
-	{
-		Name:    "InformIT",
-		HomeUrl: "http://www.informit.com/",
-		DealUrl: "http://www.informit.com/deals/deal_rss.aspx",
-	},
-	{
-		Name:    "InformIT Video",
-		HomeUrl: "http://www.informit.com/",
-		DealUrl: "http://www.informit.com/deals/video/deal_rss.aspx",
-	},
-	{
-		Name:    "Peachpit",
-		HomeUrl: "http://www.peachpit.com/",
-		DealUrl: "http://www.peachpit.com/deals/deal_rss.aspx",
-	},
-	{
-		Name:    "Peachpit Video",
-		HomeUrl: "http://www.peachpit.com/",
-		DealUrl: "http://www.peachpit.com/deals/video/deal_rss.aspx",
-	},
-	{
-		Name:    "O'Reilly",
-		HomeUrl: "http://www.oreilly.com/",
-		DealUrl: "http://feeds.feedburner.com/oreilly/ebookdealoftheday",
-	},
-	{
-		Name:    "O'Reilly Business",
-		HomeUrl: "http://www.oreilly.com/",
-		DealUrl: "http://feeds.feedburner.com/oreilly/mspebookdeal",
-	},
-	{
-		Name:    "O'Reilly Video",
-		HomeUrl: "http://www.oreilly.com/",
-		DealUrl: "http://feeds.feedburner.com/oreilly/videodealoftheweek",
-	},
-	{
-		Name:    "Manning",
-		HomeUrl: "https://manning.com/",
-		DealUrl: "https://manning.com/dotd",
-	},
-	{
-		Name:    "Packt Publishing",
-		HomeUrl: "https://www.packtpub.com/",
-		DealUrl: "https://www.packtpub.com/books/deal-of-the-day",
-	},
-	{
-		Name:    "Packt Publishing Video",
-		HomeUrl: "https://www.packtpub.com/",
-		DealUrl: "https://www.packtpub.com/videos/deal-of-the-week",
-	},
 }

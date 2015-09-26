@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"reflect"
@@ -10,6 +11,8 @@ import (
 	"github.com/hoop33/tbdotd/app/models"
 	"github.com/revel/revel"
 )
+
+const VENDOR_FILE = "conf/vendors.json"
 
 type App struct {
 	*revel.Controller
@@ -34,6 +37,17 @@ func getUrl(url string, timeout time.Duration) ([]byte, error) {
 		revel.ERROR.Printf("%s error: %s", url, err.Error())
 	}
 	return contents, err
+}
+
+func LoadVendors() {
+	contents, err := ioutil.ReadFile(VENDOR_FILE)
+	if err != nil {
+		revel.ERROR.Fatal("Error loading vendors from %s: %v", VENDOR_FILE, err)
+	} else {
+		json.Unmarshal(contents, &models.Vendors)
+		revel.INFO.Printf("Loaded vendors from %s", VENDOR_FILE)
+		revel.INFO.Printf("Vendor contents:\n%s", string(contents))
+	}
 }
 
 func (c App) Index() revel.Result {
