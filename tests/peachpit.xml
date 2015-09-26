@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+  <channel>
+    <title>eBook Deal of the Day :: Peachpit Press</title>
+    <link>http://www.peachpit.com/deals/</link>
+    <description>The latest products for the Peachpit Press eBook Deal of the Day.</description>
+    <language>en-us</language>
+    <item>
+      <title>eBook Deal of the Week ::
+				Presentation Zen Design: Simple Design Principles and Techniques to Enhance Your Presentations by Garr Reynolds</title>
+      <link>http://www.peachpit.com/deals/</link>
+      <pubDate>2015-09-20T00:00:00.00-06:00</pubDate>
+      <guid isPermaLink="false">9780133440935</guid>
+    </item>
+  </channel>
+</rss>

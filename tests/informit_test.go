@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var vendor = models.VendorWithName("InformIT")
+var informIT = models.VendorWithName("InformIT")
 
 func TestInformITParsesContents(t *testing.T) {
 	filename := "informit.xml"
@@ -16,12 +16,12 @@ func TestInformITParsesContents(t *testing.T) {
 	if err != nil {
 		t.Fail()
 	} else {
-		deal := vendor.InformIT(contents)
-		assert.Equal(t, deal.Title, "eBook Deal of the Day ::\n\t\t\t\tMMIX Supplement, The: Supplement to The Art of Computer Programming Volumes 1, 2, 3 by Donald E. Knuth by Martin Ruckert")
+		deal := informIT.InformIT(contents)
+		assert.Equal(t, "eBook Deal of the Day ::\n\t\t\t\tMMIX Supplement, The: Supplement to The Art of Computer Programming Volumes 1, 2, 3 by Donald E. Knuth by Martin Ruckert", deal.Title)
 	}
 }
 
 func TestInformITEmptyReturnsNoResults(t *testing.T) {
-	deal := vendor.InformIT([]byte{})
-	assert.Equal(t, deal.Title, "No Results")
+	deal := informIT.InformIT([]byte{})
+	assert.Equal(t, "No Results", deal.Title)
 }

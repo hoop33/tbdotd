@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+  <channel>
+    <title>Video Deal of the Week :: InformIT</title>
+    <link>http://www.informit.com/deals/video/</link>
+    <description>The latest products for the InformIT Video Deal of the Week.</description>
+    <language>en-us</language>
+    <item>
+      <title>Video Deal of the Week ::
+          Ruby on Rails Tutorial LiveLessons, The: Learn Web Development With Rails by Michael Hartl</title>
+      <link>
+          http://www.informit.com/deals/video/
+        </link>
+      <pubDate>2015-09-20T00:00:00.00-06:00</pubDate>
+      <guid isPermaLink="false">9780134097336</guid>
+    </item>
+  </channel>
+</rss>
