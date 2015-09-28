@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var oreillyBusiness = models.VendorWithName("OReillyBusiness")
+var oreillyBusiness = models.VendorWithName("O'Reilly Business")
 
 func TestOreillyBusinessParsesContents(t *testing.T) {
 	filename := "oreilly_business.xml"

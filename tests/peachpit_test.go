@@ -18,6 +18,7 @@ func TestPeachpitParsesContents(t *testing.T) {
 	} else {
 		deal := peachpit.Peachpit(contents)
 		assert.Equal(t, "eBook Deal of the Week ::\n\t\t\t\tPresentation Zen Design: Simple Design Principles and Techniques to Enhance Your Presentations by Garr Reynolds", deal.Title)
+    assert.Equal(t, int64(1442728800), deal.Date.Unix())
 	}
 }
 

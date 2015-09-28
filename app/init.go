@@ -1,9 +1,6 @@
 package app
 
-import (
-	"github.com/hoop33/tbdotd/app/controllers"
-	"github.com/revel/revel"
-)
+import "github.com/revel/revel"
 
 func init() {
 	// Filters is the default set of global filters.
@@ -26,8 +23,6 @@ func init() {
 	// ( order dependent )
 	// revel.OnAppStart(InitDB)
 	// revel.OnAppStart(FillCache)
-
-	revel.OnAppStart(controllers.LoadVendors)
 }
 
 // TODO turn this into revel.HeaderFilter

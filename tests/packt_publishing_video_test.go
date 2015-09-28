@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var packtPublishingVideo = models.VendorWithName("PacktPublishingVideo")
+var packtPublishingVideo = models.VendorWithName("Packt Publishing Video")
 
 func TestPacktPublishingVideoParsesContents(t *testing.T) {
 	filename := "packt_publishing_video.html"

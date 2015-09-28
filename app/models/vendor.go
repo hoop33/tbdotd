@@ -1,21 +1,48 @@
 package models
 
 import (
+	"encoding/json"
 	"encoding/xml"
 	"fmt"
+	"io/ioutil"
 	"regexp"
 	"strings"
+	"time"
+
+	"github.com/revel/revel"
 )
 
+const VENDOR_FILE = "conf/vendors.json"
+
 type Vendor struct {
-	Name    string
-	HomeUrl string
-	DealUrl string
+	Name       string
+	HomeUrl    string
+	DealUrl    string
+	DateFormat string
 }
 
 var Vendors []Vendor
 
 var removeChars = []string{"'", " "}
+
+func init() {
+	// TODO there has to be a better way
+	// This is to find the file whether we running or testing
+	if !(loadVendors(VENDOR_FILE) || loadVendors(fmt.Sprintf("../%s", VENDOR_FILE))) {
+		revel.ERROR.Fatal("Error loading vendors from %s", VENDOR_FILE)
+	}
+}
+
+func loadVendors(path string) bool {
+	contents, err := ioutil.ReadFile(path)
+	if err == nil {
+		json.Unmarshal(contents, &Vendors)
+		revel.INFO.Printf("Loaded vendors from %s", VENDOR_FILE)
+		revel.TRACE.Printf("Vendor contents:\n%s", string(contents))
+		return true
+	}
+	return false
+}
 
 func (vendor *Vendor) GetProcessingMethodName() string {
 	name := vendor.Name
@@ -69,17 +96,21 @@ func (vendor *Vendor) InformIT(payload []byte) Deal {
 				Title string `xml:"title"`
 				Link  string `xml:"link"`
 				Isbn  string `xml:"guid"`
+				Date  string `xml:"pubDate"`
 			} `xml:"item"`
 		} `xml:"channel"`
 	}{}
 	xml.Unmarshal(payload, &rss)
 	if rss.Channel.Item.Title != "" {
 		item := rss.Channel.Item
+
+		date, _ := time.Parse(vendor.DateFormat, item.Date)
 		return Deal{
 			Vendor:   vendor,
 			Title:    item.Title,
 			ImageUrl: fmt.Sprintf("%sShowCover.aspx?isbn=%s&type=f", vendor.HomeUrl, item.Isbn),
 			Url:      item.Link,
+			Date:     date,
 		}
 	}
 	return vendor.NotFound()

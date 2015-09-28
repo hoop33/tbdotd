@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var oreillyVideo = models.VendorWithName("OReillyVideo")
+var oreillyVideo = models.VendorWithName("O'Reilly Video")
 
 func TestOreillyVideoParsesContents(t *testing.T) {
 	filename := "oreilly_video.xml"

@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var peachpitVideo = models.VendorWithName("PeachpitVideo")
+var peachpitVideo = models.VendorWithName("Peachpit Video")
 
 func TestPeachpitVideoParsesContents(t *testing.T) {
 	filename := "peachpit_video.xml"
@@ -18,6 +18,7 @@ func TestPeachpitVideoParsesContents(t *testing.T) {
 	} else {
 		deal := peachpitVideo.PeachpitVideo(contents)
 		assert.Equal(t, "Video Deal of the Week ::\n          Workflow for Wedding Photographers: Learn by Video: Edit, design, and deliver everything from proofs to album layout in a single day by Khara Plicanic", deal.Title)
+		assert.Equal(t, int64(1442728800), deal.Date.Unix())
 	}
 }
 

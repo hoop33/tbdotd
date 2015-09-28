@@ -1,10 +1,13 @@
 package models
 
+import "time"
+
 type Deal struct {
 	Vendor   *Vendor
 	Title    string
 	ImageUrl string
 	Url      string
+	Date     time.Time
 }
 
 type ByVendorName []Deal
