@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/revel/revel"
+	"github.com/hoop33/tbdotd/Godeps/_workspace/src/github.com/revel/revel"
 )
 
 const VENDOR_FILE = "conf/vendors.json"

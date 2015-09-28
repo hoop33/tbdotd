@@ -4,8 +4,8 @@ import (
 	"io/ioutil"
 	"testing"
 
+	"github.com/hoop33/tbdotd/Godeps/_workspace/src/github.com/stretchr/testify/assert"
 	"github.com/hoop33/tbdotd/app/models"
-	"github.com/stretchr/testify/assert"
 )
 
 var oreillyVideo = models.VendorWithName("O'Reilly Video")

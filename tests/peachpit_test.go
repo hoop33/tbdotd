@@ -4,8 +4,8 @@ import (
 	"io/ioutil"
 	"testing"
 
+	"github.com/hoop33/tbdotd/Godeps/_workspace/src/github.com/stretchr/testify/assert"
 	"github.com/hoop33/tbdotd/app/models"
-	"github.com/stretchr/testify/assert"
 )
 
 var peachpit = models.VendorWithName("Peachpit")
@@ -18,7 +18,7 @@ func TestPeachpitParsesContents(t *testing.T) {
 	} else {
 		deal := peachpit.Peachpit(contents)
 		assert.Equal(t, "eBook Deal of the Week ::\n\t\t\t\tPresentation Zen Design: Simple Design Principles and Techniques to Enhance Your Presentations by Garr Reynolds", deal.Title)
-    assert.Equal(t, int64(1442728800), deal.Date.Unix())
+		assert.Equal(t, int64(1442728800), deal.Date.Unix())
 	}
 }
 
