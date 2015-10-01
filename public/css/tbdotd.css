@@ -93,6 +93,7 @@ i {
   text-align: center;
   background-color: #90CAF9;
   color: #e8eaf6;
+  color: #0D47A1;
   font-size: 1.5em;
   font-weight: 700;
   border-radius: 10px 10px 0 0;
@@ -100,6 +101,3 @@ i {
   padding: 10px 0;
 }
 
-.vendor-name a {
-  color: #0D47A1;
-}

@@ -1,19 +1,17 @@
 <div class="deal col-xs-12 col-sm-6 col-md-4 col-lg-3">
   <div class="deal-container">
-    <div class="vendor-name">
-      <a href="{{.Vendor.HomeUrl}}">
+    <a href="{{.Vendor.HomeUrl}}">
+      <div class="vendor-name">
         {{.Vendor.Name}}
-      </a>
-    </div>
-    <div class="deal-image">
-      <a href="{{.Url}}">
+      </div>
+    </a>
+    <a href="{{.Url}}">
+      <div class="deal-image">
         <img src="{{.ImageUrl}}" alt="{{.Title}}" height="150">
-      </a>
-    </div>
-    <div class="deal-title">
-      <a href="{{.Url}}">
+      </div>
+      <div class="deal-title">
         {{.Title}}
-      </a>
-    </div>
+      </div>
+    </a>
   </div>
 </div>
