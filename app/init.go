@@ -1,6 +1,6 @@
 package app
 
-import "github.com/hoop33/tbdotd/Godeps/_workspace/src/github.com/revel/revel"
+import "github.com/revel/revel"
 
 func init() {
 	// Filters is the default set of global filters.

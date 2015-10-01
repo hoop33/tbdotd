@@ -1,6 +1,6 @@
 package tests
 
-import "github.com/hoop33/tbdotd/Godeps/_workspace/src/github.com/revel/revel/testing"
+import "github.com/revel/revel/testing"
 
 type AppTest struct {
 	testing.TestSuite
