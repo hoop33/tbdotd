@@ -18,6 +18,7 @@ func TestPacktPublishingParsesContents(t *testing.T) {
 	} else {
 		deal := packtPublishing.PacktPublishing(contents)
 		assert.Equal(t, "Mastering JavaScript [Video]", deal.Title)
+    assert.Equal(t, "https://www.packtpub.com/books/deal-of-the-day", deal.Url)
 	}
 }
 

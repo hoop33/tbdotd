@@ -18,6 +18,7 @@ func TestOreillyBusinessParsesContents(t *testing.T) {
 	} else {
 		deal := oreillyBusiness.OReillyBusiness(contents)
 		assert.Equal(t, "#Video Deal/Day: Software Architecture Fundamentals People Skills -\n$39.99 (Save 50%)\n\n\n Use code MSDEAL", deal.Title)
+		assert.Equal(t, "http://shop.oreilly.com/product/0636920040309.do#2015-09-25feed", deal.Url)
 	}
 }
 

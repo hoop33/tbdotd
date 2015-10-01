@@ -18,6 +18,7 @@ func TestInformITVideoParsesContents(t *testing.T) {
 	} else {
 		deal := informITVideo.InformITVideo(contents)
 		assert.Equal(t, "Video Deal of the Week ::\n          Ruby on Rails Tutorial LiveLessons, The: Learn Web Development With Rails by Michael Hartl", deal.Title)
+		assert.Equal(t, "http://www.informit.com/deals/video/", deal.Url)
 		assert.Equal(t, int64(1442728800), deal.Date.Unix())
 	}
 }

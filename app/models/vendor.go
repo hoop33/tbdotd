@@ -109,7 +109,7 @@ func (vendor *Vendor) InformIT(payload []byte) Deal {
 			Vendor:   vendor,
 			Title:    item.Title,
 			ImageUrl: fmt.Sprintf("%sShowCover.aspx?isbn=%s&type=f", vendor.HomeUrl, item.Isbn),
-			Url:      item.Link,
+			Url:      strings.TrimSpace(item.Link),
 			Date:     date,
 		}
 	}
@@ -199,7 +199,7 @@ func (vendor *Vendor) PacktPublishingVideo(payload []byte) Deal {
 	if matches != nil {
 		return Deal{
 			Vendor:   vendor,
-			Title:    string(matches[2]),
+      Title:    strings.TrimSpace(string(matches[2])),
 			ImageUrl: fmt.Sprintf("http:%s", matches[1]),
 			Url:      vendor.DealUrl,
 		}

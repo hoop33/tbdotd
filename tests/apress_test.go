@@ -18,6 +18,7 @@ func TestApressParsesContents(t *testing.T) {
 	} else {
 		deal := apress.Apress(contents)
 		assert.Equal(t, "Android Best Practices", deal.Title)
+		assert.Equal(t, "http://www.apress.com/dailydeals/index/view/id/1719/url/aHR0cDovL3d3dy5hcHJlc3MuY29tLzk3ODE0MzAyNTg1NzU=/", deal.Url)
 	}
 }
 

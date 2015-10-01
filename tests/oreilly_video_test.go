@@ -18,6 +18,7 @@ func TestOreillyVideoParsesContents(t *testing.T) {
 	} else {
 		deal := oreillyVideo.OReillyVideo(contents)
 		assert.Equal(t, "#Video Deal/Week: Porting from Python 2 to Python 3 -\n$24.98 (Save 50%)\n\n\n Use code VDWK", deal.Title)
+		assert.Equal(t, "http://shop.oreilly.com/product/0636920042525.do#2015-09-23feed", deal.Url)
 	}
 }
 

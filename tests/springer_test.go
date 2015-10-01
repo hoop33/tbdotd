@@ -18,6 +18,7 @@ func TestSpringerParsesContents(t *testing.T) {
 	} else {
 		deal := springer.Springer(contents)
 		assert.Equal(t, "Concurrent Programming: Algorithms, Principles, and Foundations", deal.Title)
+		assert.Equal(t, "http://www.apress.com/dailydealsspringer/index/view/id/1673/url/aHR0cDovL3d3dy5hcHJlc3MuY29tLzk3ODM2NDIzMjAyNjI=/", deal.Url)
 	}
 }
 

@@ -17,7 +17,8 @@ func TestPacktPublishingVideoParsesContents(t *testing.T) {
 		t.Fail()
 	} else {
 		deal := packtPublishingVideo.PacktPublishingVideo(contents)
-		assert.Equal(t, "\t\t\t\t\tLearning Functional JavaScript [Video]", deal.Title)
+		assert.Equal(t, "Learning Functional JavaScript [Video]", deal.Title)
+    assert.Equal(t, "https://www.packtpub.com/videos/deal-of-the-week", deal.Url)
 	}
 }
 

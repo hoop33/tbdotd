@@ -18,6 +18,7 @@ func TestManningParsesContents(t *testing.T) {
   } else {
     deal := manning.Manning(contents)
     assert.Equal(t, "hapi.js in Action", deal.Title)
+    assert.Equal(t, "https://manning.com/books/hapi-js-in-action", deal.Url)
   }
 }
 
