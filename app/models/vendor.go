@@ -1,18 +1,12 @@
 package models
 
 import (
-	"encoding/json"
 	"encoding/xml"
 	"fmt"
-	"io/ioutil"
 	"regexp"
 	"strings"
 	"time"
-
-	"github.com/revel/revel"
 )
-
-const VENDOR_FILE = "conf/vendors.json"
 
 type Vendor struct {
 	Name       string
@@ -21,28 +15,7 @@ type Vendor struct {
 	DateFormat string
 }
 
-var Vendors []Vendor
-
 var removeChars = []string{"'", " "}
-
-func init() {
-	// TODO there has to be a better way
-	// This is to find the file whether we running or testing
-	if !(loadVendors(VENDOR_FILE) || loadVendors(fmt.Sprintf("../%s", VENDOR_FILE))) {
-		revel.ERROR.Fatal("Error loading vendors from %s", VENDOR_FILE)
-	}
-}
-
-func loadVendors(path string) bool {
-	contents, err := ioutil.ReadFile(path)
-	if err == nil {
-		json.Unmarshal(contents, &Vendors)
-		revel.INFO.Printf("Loaded vendors from %s", VENDOR_FILE)
-		revel.TRACE.Printf("Vendor contents:\n%s", string(contents))
-		return true
-	}
-	return false
-}
 
 func (vendor *Vendor) GetProcessingMethodName() string {
 	name := vendor.Name
@@ -199,7 +172,7 @@ func (vendor *Vendor) PacktPublishingVideo(payload []byte) Deal {
 	if matches != nil {
 		return Deal{
 			Vendor:   vendor,
-      Title:    strings.TrimSpace(string(matches[2])),
+			Title:    strings.TrimSpace(string(matches[2])),
 			ImageUrl: fmt.Sprintf("http:%s", matches[1]),
 			Url:      vendor.DealUrl,
 		}
