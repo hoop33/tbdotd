@@ -17,6 +17,17 @@ type Vendor struct {
 
 var removeChars = []string{"'", " "}
 
+var XML_REGEXES = map[*regexp.Regexp][]byte{
+	regexp.MustCompile(" & "): []byte(" &amp; "),
+}
+
+func cleanXML(xml []byte) []byte {
+	for re, repl := range XML_REGEXES {
+		xml = re.ReplaceAll(xml, repl)
+	}
+	return xml
+}
+
 func (vendor *Vendor) GetProcessingMethodName() string {
 	name := vendor.Name
 	for _, r := range removeChars {
@@ -73,7 +84,7 @@ func (vendor *Vendor) InformIT(payload []byte) Deal {
 			} `xml:"item"`
 		} `xml:"channel"`
 	}{}
-	xml.Unmarshal(payload, &rss)
+	xml.Unmarshal(cleanXML(payload), &rss)
 	if rss.Channel.Item.Title != "" {
 		item := rss.Channel.Item
 
