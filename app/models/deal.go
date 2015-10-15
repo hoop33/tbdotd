@@ -15,7 +15,11 @@ type Deal struct {
 	Regex      string
 }
 
-var res = []*regexp.Regexp{
+var XML_REGEXES = map[*regexp.Regexp][]byte{
+	regexp.MustCompile(" & "): []byte(" &amp; "),
+}
+
+var TITLE_REGEXES = []*regexp.Regexp{
 	regexp.MustCompile("^.+?::"),
 	regexp.MustCompile("^#.+?:"),
 	regexp.MustCompile("\\[.+?\\]$"),
@@ -23,12 +27,19 @@ var res = []*regexp.Regexp{
 
 var removeChars = []string{"'", " "}
 
-func clean(title string) string {
+func cleanTitle(title string) string {
 	title = strings.TrimSpace(title)
-	for _, re := range res {
+	for _, re := range TITLE_REGEXES {
 		title = re.ReplaceAllString(title, "")
 	}
 	return title
+}
+
+func cleanXML(xml []byte) []byte {
+	for re, repl := range XML_REGEXES {
+		xml = re.ReplaceAll(xml, repl)
+	}
+	return xml
 }
 
 func (deal *Deal) GetProcessingMethodName() string {
@@ -53,7 +64,7 @@ func (deal *Deal) Apress(vendor *Vendor, payload []byte) Result {
 	matches := re.FindSubmatch(payload)
 	if matches != nil {
 		return Result{
-			Title:    clean(string(matches[3])),
+			Title:    cleanTitle(string(matches[3])),
 			ImageUrl: string(matches[1]),
 			Url:      string(matches[2]),
 		}
@@ -77,7 +88,7 @@ func (deal *Deal) InformIT(vendor *Vendor, payload []byte) Result {
 			} `xml:"item"`
 		} `xml:"channel"`
 	}{}
-	xml.Unmarshal(payload, &rss)
+	xml.Unmarshal(cleanXML(payload), &rss)
 	if rss.Channel.Item.Title != "" {
 		item := rss.Channel.Item
 
@@ -86,7 +97,7 @@ func (deal *Deal) InformIT(vendor *Vendor, payload []byte) Result {
 			date = date.Add(24 * time.Hour)
 		}
 		return Result{
-			Title:          clean(item.Title),
+			Title:          cleanTitle(item.Title),
 			ImageUrl:       fmt.Sprintf("%sShowCover.aspx?isbn=%s&type=f", vendor.Url, item.Isbn),
 			Url:            strings.TrimSpace(item.Link),
 			ExpirationDate: date,
@@ -128,7 +139,7 @@ func (deal *Deal) OReilly(vendor *Vendor, payload []byte) Result {
 		}
 
 		return Result{
-			Title:    clean(item.Title),
+			Title:    cleanTitle(item.Title),
 			ImageUrl: imageUrl,
 			Url:      item.Link,
 		}
@@ -150,7 +161,7 @@ func (deal *Deal) Manning(vendor *Vendor, payload []byte) Result {
 	matches := re.FindSubmatch(payload)
 	if matches != nil {
 		return Result{
-			Title:    clean(string(matches[2])),
+			Title:    cleanTitle(string(matches[2])),
 			ImageUrl: string(matches[3]),
 			Url:      fmt.Sprintf("%s%s", vendor.Url, strings.TrimPrefix(string(matches[1]), "/")),
 		}
@@ -164,7 +175,7 @@ func (deal *Deal) PacktPublishing(vendor *Vendor, payload []byte) Result {
 	matches := re.FindSubmatch(payload)
 	if matches != nil {
 		return Result{
-			Title:    clean(strings.TrimSpace(string(matches[2]))),
+			Title:    cleanTitle(strings.TrimSpace(string(matches[2]))),
 			ImageUrl: fmt.Sprintf("http:%s", matches[1]),
 			Url:      deal.PayloadUrl,
 		}

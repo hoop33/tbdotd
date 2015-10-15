@@ -30,4 +30,4 @@ We love contributions. Fork the project, make the changes, push to your fork, an
 
 ## License
 
-Tech Books Deals of the Day is released under the (MIT license)[http://hoop33.mit-license.org/license].
+Tech Books Deals of the Day is released under the [MIT license](http://hoop33.mit-license.org/license).
