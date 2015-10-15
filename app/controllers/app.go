@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"reflect"
-	"sort"
+	"sync"
 	"time"
 
 	"github.com/hoop33/tbdotd/app/models"
@@ -14,6 +14,8 @@ import (
 type App struct {
 	*revel.Controller
 }
+
+var results = make(map[string]models.Result)
 
 func getUrl(url string, timeout time.Duration) ([]byte, error) {
 	revel.INFO.Printf("Retrieving %s", url)
@@ -37,38 +39,45 @@ func getUrl(url string, timeout time.Duration) ([]byte, error) {
 }
 
 func (c App) Index() revel.Result {
-	results := make(chan models.Deal)
-
 	timeout := revel.Config.IntDefault("url.timeout", 5)
 	revel.INFO.Printf("URL timeout set to %ds", timeout)
 
 	urlTimeout := time.Duration(timeout) * time.Second
 
+	var waitGroup sync.WaitGroup
 	for _, vendor := range models.Vendors {
-		go func(vendor models.Vendor) {
-			var deal models.Deal
-			method := reflect.ValueOf(&vendor).MethodByName(vendor.GetProcessingMethodName())
-			if method.IsValid() {
-				if payload, err := getUrl(vendor.DealUrl, urlTimeout); err == nil {
-					values := method.Call([]reflect.Value{reflect.ValueOf(payload)})
-					deal = values[0].Interface().(models.Deal)
+		for _, deal := range vendor.Deals {
+			waitGroup.Add(1)
+			go func(vendor models.Vendor, deal models.Deal) {
+				defer waitGroup.Done()
+
+				result := results[deal.Name]
+				if time.Now().After(result.ExpirationDate) {
+
+					// TODO determine whether current deal has expired
+					method := reflect.ValueOf(&deal).MethodByName(deal.GetProcessingMethodName())
+					if method.IsValid() {
+						if payload, err := getUrl(deal.PayloadUrl, urlTimeout); err == nil {
+							values := method.Call([]reflect.Value{reflect.ValueOf(&vendor), reflect.ValueOf(payload)})
+							result := values[0].Interface().(models.Result)
+							result.Vendor = &vendor
+							result.Deal = &deal
+							results[deal.Name] = result
+						}
+					}
+				} else {
+					revel.INFO.Printf("Pulling %s from cache", deal.Name)
 				}
-			}
-			// TODO Surely there's a better way to do this
-			// We have two if statements, so two elses
-			if deal.Title == "" {
-				deal = vendor.NotFound()
-			}
-			results <- deal
-		}(vendor)
+				// TODO Surely there's a better way to do this
+				// We have two if statements, so two elses
+				//if deal.Title == "" {
+				//deal.NotFound()
+				//}
+			}(vendor, deal)
+		}
 	}
 
-	// TODO should we use a WaitGroup here instead?
-	deals := []models.Deal{}
-	for _, _ = range models.Vendors {
-		deals = append(deals, <-results)
-	}
-
-	sort.Sort(models.ByVendorName(deals))
-	return c.Render(deals)
+	waitGroup.Wait()
+	//sort.Sort(models.ByVendorName(results))
+	return c.Render(results)
 }

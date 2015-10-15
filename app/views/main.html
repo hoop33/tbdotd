@@ -6,8 +6,8 @@
   </div>
 
   <div class="row equal-height-deals">
-    {{range .deals}}
-    {{template "deal.html" .}}
+    {{range $key, $value := .results}}
+    {{template "deal.html" $value}}
     {{end}}
   </div>
 </div>
