@@ -6,7 +6,7 @@
   </div>
 
   <div class="row equal-height-deals">
-    {{range $key, $value := .results}}
+    {{range $key, $value := .deals}}
     {{template "deal.html" $value}}
     {{end}}
   </div>

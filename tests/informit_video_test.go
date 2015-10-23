@@ -8,22 +8,24 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var informITVideo = models.VendorWithName("InformIT Video")
-
 func TestInformITVideoParsesContents(t *testing.T) {
 	filename := "informit_video.xml"
 	contents, err := ioutil.ReadFile(filename)
 	if err != nil {
 		t.Fail()
 	} else {
-		deal := informITVideo.InformITVideo(contents)
-		assert.Equal(t, "Video Deal of the Week ::\n          Ruby on Rails Tutorial LiveLessons, The: Learn Web Development With Rails by Michael Hartl", deal.Title)
+		vendor := models.Vendors["InformIT"]
+		source := vendor.Sources["InformIT Video"]
+		deal := source.InformITVideo(&vendor, contents)
+		assert.Equal(t, "Ruby on Rails Tutorial LiveLessons, The: Learn Web Development With Rails by Michael Hartl", deal.Title)
 		assert.Equal(t, "http://www.informit.com/deals/video/", deal.Url)
-		assert.Equal(t, int64(1442728800), deal.Date.Unix())
+		assert.Equal(t, int64(1442815200), deal.ExpirationDate.Unix())
 	}
 }
 
 func TestInformITVideoEmptyReturnsNoResults(t *testing.T) {
-	deal := informITVideo.InformITVideo([]byte{})
-	assert.Equal(t, "No Results", deal.Title)
+	vendor := models.Vendors["InformIT"]
+	source := vendor.Sources["InformIT Video"]
+	deal := source.InformITVideo(&vendor, []byte{})
+	assert.Equal(t, "No Deal", deal.Title)
 }

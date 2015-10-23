@@ -8,22 +8,24 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var peachpit = models.VendorWithName("Peachpit")
-
 func TestPeachpitParsesContents(t *testing.T) {
 	filename := "peachpit.xml"
 	contents, err := ioutil.ReadFile(filename)
 	if err != nil {
 		t.Fail()
 	} else {
-		deal := peachpit.Peachpit(contents)
-		assert.Equal(t, "eBook Deal of the Week ::\n\t\t\t\tPresentation Zen Design: Simple Design Principles and Techniques to Enhance Your Presentations by Garr Reynolds", deal.Title)
-    assert.Equal(t, "http://www.peachpit.com/deals/", deal.Url)
-    assert.Equal(t, int64(1442728800), deal.Date.Unix())
+		vendor := models.Vendors["Peachpit"]
+		source := vendor.Sources["Peachpit"]
+		deal := source.Peachpit(&vendor, contents)
+		assert.Equal(t, "Presentation Zen Design: Simple Design Principles and Techniques to Enhance Your Presentations by Garr Reynolds", deal.Title)
+		assert.Equal(t, "http://www.peachpit.com/deals/", deal.Url)
+		assert.Equal(t, int64(1442815200), deal.ExpirationDate.Unix())
 	}
 }
 
 func TestPeachpitEmptyReturnsNoResults(t *testing.T) {
-	deal := peachpit.Peachpit([]byte{})
-	assert.Equal(t, "No Results", deal.Title)
+	vendor := models.Vendors["Peachpit"]
+	source := vendor.Sources["Peachpit"]
+	deal := source.Peachpit(&vendor, []byte{})
+	assert.Equal(t, "No Deal", deal.Title)
 }

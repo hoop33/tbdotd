@@ -15,7 +15,7 @@ type App struct {
 	*revel.Controller
 }
 
-var results = make(map[string]models.Result)
+var deals = make(map[string]models.Deal)
 
 func getUrl(url string, timeout time.Duration) ([]byte, error) {
 	revel.INFO.Printf("Retrieving %s", url)
@@ -46,38 +46,37 @@ func (c App) Index() revel.Result {
 
 	var waitGroup sync.WaitGroup
 	for _, vendor := range models.Vendors {
-		for _, deal := range vendor.Deals {
+		for sourceName, source := range vendor.Sources {
 			waitGroup.Add(1)
-			go func(vendor models.Vendor, deal models.Deal) {
+			go func(vendor models.Vendor, sourceName string, source models.Source) {
 				defer waitGroup.Done()
 
-				result := results[deal.Name]
-				if time.Now().After(result.ExpirationDate) {
-
-					// TODO determine whether current deal has expired
-					method := reflect.ValueOf(&deal).MethodByName(deal.GetProcessingMethodName())
+				deal := deals[sourceName]
+				if time.Now().After(deal.ExpirationDate) {
+					method := reflect.ValueOf(&source).MethodByName(source.GetProcessingMethodName(sourceName))
 					if method.IsValid() {
-						if payload, err := getUrl(deal.PayloadUrl, urlTimeout); err == nil {
+						if payload, err := getUrl(source.PayloadUrl, urlTimeout); err == nil {
 							values := method.Call([]reflect.Value{reflect.ValueOf(&vendor), reflect.ValueOf(payload)})
-							result := values[0].Interface().(models.Result)
-							result.Vendor = &vendor
-							result.Deal = &deal
-							results[deal.Name] = result
+							deal := values[0].Interface().(models.Deal)
+							deal.Vendor = &vendor
+							deal.Source = &source
+							deal.Name = sourceName
+							deals[sourceName] = deal
 						}
 					}
 				} else {
-					revel.INFO.Printf("Pulling %s from cache", deal.Name)
+					revel.INFO.Printf("Using %s from cache", sourceName)
 				}
 				// TODO Surely there's a better way to do this
 				// We have two if statements, so two elses
 				//if deal.Title == "" {
 				//deal.NotFound()
 				//}
-			}(vendor, deal)
+			}(vendor, sourceName, source)
 		}
 	}
 
 	waitGroup.Wait()
-	//sort.Sort(models.ByVendorName(results))
-	return c.Render(results)
+	//sort.Sort(models.BySourceName(deals))
+	return c.Render(deals)
 }
