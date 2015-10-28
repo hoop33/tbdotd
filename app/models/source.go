@@ -75,6 +75,24 @@ func (source *Source) Springer(vendor *Vendor, payload []byte) Deal {
 }
 
 func (source *Source) InformIT(vendor *Vendor, payload []byte) Deal {
+	deal := source.informITCommon(vendor, payload)
+
+	// Expires 1 day after the publish date
+	deal.ExpirationDate = deal.ExpirationDate.Add(24 * time.Hour)
+
+	return deal
+}
+
+func (source *Source) InformITVideo(vendor *Vendor, payload []byte) Deal {
+	deal := source.informITCommon(vendor, payload)
+
+	// Expires 1 week after the publish date
+	deal.ExpirationDate = deal.ExpirationDate.Add(7 * 24 * time.Hour)
+
+	return deal
+}
+
+func (source *Source) informITCommon(vendor *Vendor, payload []byte) Deal {
 	rss := struct {
 		Channel struct {
 			Item struct {
@@ -89,10 +107,7 @@ func (source *Source) InformIT(vendor *Vendor, payload []byte) Deal {
 	if rss.Channel.Item.Title != "" {
 		item := rss.Channel.Item
 
-		date, err := time.Parse(source.DateFormat, item.Date)
-		if err == nil {
-			date = date.Add(24 * time.Hour)
-		}
+		date, _ := time.Parse(source.DateFormat, item.Date)
 		return Deal{
 			Title:          cleanTitle(item.Title),
 			ImageUrl:       fmt.Sprintf("%sShowCover.aspx?isbn=%s&type=f", vendor.Url, item.Isbn),
@@ -102,10 +117,6 @@ func (source *Source) InformIT(vendor *Vendor, payload []byte) Deal {
 	} else {
 		return source.NotFound()
 	}
-}
-
-func (source *Source) InformITVideo(vendor *Vendor, payload []byte) Deal {
-	return source.InformIT(vendor, payload)
 }
 
 func (source *Source) Peachpit(vendor *Vendor, payload []byte) Deal {
