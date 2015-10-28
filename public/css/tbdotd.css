@@ -7,7 +7,7 @@ body {
 }
 
 i {
-  font-size: 2.0em;
+  font-size: 1.2em;
 }
 
 .deal {
@@ -21,6 +21,10 @@ i {
   -webkit-box-shadow: 0px 5px 10px 0px rgba(26,35,126,0.75);
   -moz-box-shadow: 0px 5px 10px 0px rgba(26,35,126,0.75);
   box-shadow: 0px 5px 10px 0px rgba(26,35,126,0.75);
+}
+
+.deal-contents {
+  margin: 0;
 }
 
 .deal-title {
@@ -54,7 +58,7 @@ i {
 .navbar-default .navbar-brand:focus,
 .navbar-default .navbar-brand:hover {
   color: #0D47A1;
-  font-size: 2.0em;
+  font-size: 1.1em;
   font-weight: 700;
 }
 
@@ -100,4 +104,3 @@ i {
   border-bottom: 1px solid #1A237E;
   padding: 10px 0;
 }
-

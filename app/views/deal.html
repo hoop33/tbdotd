@@ -1,4 +1,4 @@
-<div class="deal col-xs-12 col-sm-6 col-md-4 col-lg-3">
+<div class="deal col-sm-6 col-md-4 col-lg-3">
   <div class="deal-container">
     <a href="{{.Vendor.Url}}">
       <div class="vendor-name">
@@ -6,11 +6,13 @@
       </div>
     </a>
     <a href="{{.Url}}">
-      <div class="deal-image">
-        <img src="{{.ImageUrl}}" alt="{{.Title}}" height="150">
-      </div>
-      <div class="deal-title">
-        {{.Title}}
+      <div class="row deal-contents">
+        <div class="col-xs-6 deal-image">
+          <img src="{{.ImageUrl}}" alt="{{.Title}}" height="150">
+        </div>
+        <div class="col-xs-6 deal-title">
+          {{.Title}}
+        </div>
       </div>
     </a>
   </div>
