@@ -67,16 +67,13 @@ func (c App) Index() revel.Result {
 				} else {
 					revel.INFO.Printf("Using %s from cache", sourceName)
 				}
-				// TODO Surely there's a better way to do this
-				// We have two if statements, so two elses
-				//if deal.Title == "" {
-				//deal.NotFound()
-				//}
+				if deal.Title == "" {
+					deal = source.NotFound()
+				}
 			}(vendor, sourceName, source)
 		}
 	}
 
 	waitGroup.Wait()
-	//sort.Sort(models.BySourceName(deals))
 	return c.Render(deals)
 }
