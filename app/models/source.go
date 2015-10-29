@@ -47,6 +47,21 @@ func nextWeek(date time.Time) time.Time {
 	return date.Add(7 * 24 * time.Hour)
 }
 
+func defaultExpiration() time.Time {
+	// Because we don't know when they're going to publish,
+	// here's what we're doing:
+	//
+	// * If it's after 8am, cache the result for the rest of the day
+	// * If it's before 8am, hit the remote every time
+
+	now := time.Now()
+	if now.Before(time.Date(now.Year(), now.Month(), now.Day(), 8, 0, 0, 0, now.Location())) {
+		return now
+	} else {
+		return time.Date(now.Year(), now.Month(), now.Day(), 23, 59, 59, 0, now.Location())
+	}
+}
+
 func (source *Source) GetProcessingMethodName(sourceName string) string {
 	name := sourceName
 	for _, r := range []string{"'", " "} {
@@ -69,9 +84,10 @@ func (source *Source) Apress(vendor *Vendor, payload []byte) Deal {
 	matches := re.FindSubmatch(payload)
 	if matches != nil {
 		return Deal{
-			Title:    cleanTitle(string(matches[3])),
-			ImageUrl: string(matches[1]),
-			Url:      string(matches[2]),
+			Title:          cleanTitle(string(matches[3])),
+			ImageUrl:       string(matches[1]),
+			Url:            string(matches[2]),
+			ExpirationDate: defaultExpiration(),
 		}
 	} else {
 		return source.NotFound()
@@ -114,7 +130,7 @@ func (source *Source) informITCommon(vendor *Vendor, payload []byte) Deal {
 			Title:          cleanTitle(item.Title),
 			ImageUrl:       fmt.Sprintf("%sShowCover.aspx?isbn=%s&type=f", vendor.Url, item.Isbn),
 			Url:            strings.TrimSpace(item.Link),
-			ExpirationDate: date,
+			ExpirationDate: date, // calling routines will adjust based on the publish date
 		}
 	} else {
 		return source.NotFound()
@@ -153,9 +169,10 @@ func (source *Source) OReilly(vendor *Vendor, payload []byte) Deal {
 		}
 
 		return Deal{
-			Title:    cleanTitle(item.Title),
-			ImageUrl: imageUrl,
-			Url:      item.Link,
+			Title:          cleanTitle(item.Title),
+			ImageUrl:       imageUrl,
+			Url:            item.Link,
+			ExpirationDate: defaultExpiration(),
 		}
 	} else {
 		return source.NotFound()
@@ -175,9 +192,10 @@ func (source *Source) Manning(vendor *Vendor, payload []byte) Deal {
 	matches := re.FindSubmatch(payload)
 	if matches != nil {
 		return Deal{
-			Title:    cleanTitle(string(matches[2])),
-			ImageUrl: string(matches[3]),
-			Url:      fmt.Sprintf("%s%s", vendor.Url, strings.TrimPrefix(string(matches[1]), "/")),
+			Title:          cleanTitle(string(matches[2])),
+			ImageUrl:       string(matches[3]),
+			Url:            fmt.Sprintf("%s%s", vendor.Url, strings.TrimPrefix(string(matches[1]), "/")),
+			ExpirationDate: defaultExpiration(),
 		}
 	} else {
 		return source.NotFound()
@@ -189,9 +207,10 @@ func (source *Source) PacktPublishing(vendor *Vendor, payload []byte) Deal {
 	matches := re.FindSubmatch(payload)
 	if matches != nil {
 		return Deal{
-			Title:    cleanTitle(strings.TrimSpace(string(matches[2]))),
-			ImageUrl: fmt.Sprintf("http:%s", matches[1]),
-			Url:      source.PayloadUrl,
+			Title:          cleanTitle(strings.TrimSpace(string(matches[2]))),
+			ImageUrl:       fmt.Sprintf("http:%s", matches[1]),
+			Url:            source.PayloadUrl,
+			ExpirationDate: defaultExpiration(),
 		}
 	} else {
 		return source.NotFound()
