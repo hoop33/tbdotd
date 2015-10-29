@@ -39,6 +39,14 @@ func cleanXML(xml []byte) []byte {
 	return xml
 }
 
+func nextDay(date time.Time) time.Time {
+	return date.Add(24 * time.Hour)
+}
+
+func nextWeek(date time.Time) time.Time {
+	return date.Add(7 * 24 * time.Hour)
+}
+
 func (source *Source) GetProcessingMethodName(sourceName string) string {
 	name := sourceName
 	for _, r := range []string{"'", " "} {
@@ -76,19 +84,13 @@ func (source *Source) Springer(vendor *Vendor, payload []byte) Deal {
 
 func (source *Source) InformIT(vendor *Vendor, payload []byte) Deal {
 	deal := source.informITCommon(vendor, payload)
-
-	// Expires 1 day after the publish date
-	deal.ExpirationDate = deal.ExpirationDate.Add(24 * time.Hour)
-
+	deal.ExpirationDate = nextDay(deal.ExpirationDate)
 	return deal
 }
 
 func (source *Source) InformITVideo(vendor *Vendor, payload []byte) Deal {
 	deal := source.informITCommon(vendor, payload)
-
-	// Expires 1 week after the publish date
-	deal.ExpirationDate = deal.ExpirationDate.Add(7 * 24 * time.Hour)
-
+	deal.ExpirationDate = nextWeek(deal.ExpirationDate)
 	return deal
 }
 
@@ -120,11 +122,15 @@ func (source *Source) informITCommon(vendor *Vendor, payload []byte) Deal {
 }
 
 func (source *Source) Peachpit(vendor *Vendor, payload []byte) Deal {
-	return source.InformIT(vendor, payload)
+	deal := source.informITCommon(vendor, payload)
+	deal.ExpirationDate = nextWeek(deal.ExpirationDate)
+	return deal
 }
 
 func (source *Source) PeachpitVideo(vendor *Vendor, payload []byte) Deal {
-	return source.InformIT(vendor, payload)
+	deal := source.informITCommon(vendor, payload)
+	deal.ExpirationDate = nextWeek(deal.ExpirationDate)
+	return deal
 }
 
 func (source *Source) OReilly(vendor *Vendor, payload []byte) Deal {

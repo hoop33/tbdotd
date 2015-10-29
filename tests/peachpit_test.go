@@ -19,7 +19,7 @@ func TestPeachpitParsesContents(t *testing.T) {
 		deal := source.Peachpit(&vendor, contents)
 		assert.Equal(t, "Presentation Zen Design: Simple Design Principles and Techniques to Enhance Your Presentations by Garr Reynolds", deal.Title)
 		assert.Equal(t, "http://www.peachpit.com/deals/", deal.Url)
-		assert.Equal(t, int64(1442815200), deal.ExpirationDate.Unix())
+		assert.Equal(t, int64(1443333600), deal.ExpirationDate.Unix())
 	}
 }
 

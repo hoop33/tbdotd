@@ -19,7 +19,7 @@ func TestPeachpitVideoParsesContents(t *testing.T) {
 		deal := source.PeachpitVideo(&vendor, contents)
 		assert.Equal(t, "Workflow for Wedding Photographers: Learn by Video: Edit, design, and deliver everything from proofs to album layout in a single day by Khara Plicanic", deal.Title)
 		assert.Equal(t, "http://www.peachpit.com/deals/video/", deal.Url)
-		assert.Equal(t, int64(1442815200), deal.ExpirationDate.Unix())
+		assert.Equal(t, int64(1443333600), deal.ExpirationDate.Unix())
 	}
 }
 
