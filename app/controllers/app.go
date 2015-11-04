@@ -15,7 +15,12 @@ type App struct {
 	*revel.Controller
 }
 
-var deals = make(map[string]models.Deal)
+var deals map[string]models.Deal
+
+func initializeCache() {
+	revel.INFO.Print("Clearing cache")
+	deals = make(map[string]models.Deal)
+}
 
 func getUrl(url string, timeout time.Duration) ([]byte, error) {
 	revel.INFO.Printf("Retrieving %s", url)
@@ -38,7 +43,11 @@ func getUrl(url string, timeout time.Duration) ([]byte, error) {
 	return contents, err
 }
 
-func (c App) Index() revel.Result {
+func (c App) Index(clearCache bool) revel.Result {
+	if deals == nil || clearCache {
+		initializeCache()
+	}
+
 	timeout := revel.Config.IntDefault("url.timeout", 5)
 	revel.INFO.Printf("URL timeout set to %ds", timeout)
 
